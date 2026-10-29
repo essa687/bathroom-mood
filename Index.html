@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bathroom Mood - Demo</title>
+    <style>
+        :root {
+            --bg-color: #0f0f15;
+            --card-bg: #1a1a24;
+            --accent-color: #e50914;
+            --text-color: #ffffff;
+            --success-color: #2ec4b6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .demo-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        h1 { color: var(--accent-color); font-size: 24px; }
+        h2 { font-size: 18px; color: #aaa; }
+
+        .ticket-info {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .ticket-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .status-box {
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 25px;
+        }
+
+        .timer {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .status-text {
+            font-weight: bold;
+            color: var(--success-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: #0f0f15;
+            display: none;
+        }
+
+        .live-feed {
+            display: none;
+            background: #000;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #ccc;
+            border: 1px solid rgba(255, 9, 20, 0.3);
+        }
+
+        .barcode-scan-sim {
+            text-align: center;
+            padding: 10px;
+            background: #fff;
+            color: #000;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="demo-container">
+        <h1>🍿 Bathroom Mood</h1>
+        <h2>Seat Sync Active</h2>
+
+        <!-- Barcode Simulation Link -->
+        <div class="ticket-info" id="ticketDetails">
+            <div class="ticket-line"><strong>Movie:</strong> <span>Sci-Fi Adventure 2</span></div>
+            <div class="ticket-line"><strong>Theater:</strong> <span>Screen 4</span></div>
+            <div class="ticket-line"><strong>Seat:</strong> <span>Row H - 12</span></div>
+        </div>
+
+        <!-- Live App State -->
+        <div class="status-box">
+            <div>Movie Runtime Counter</div>
+            <div class="timer" id="movieTimer">01:24:15</div>
+            <div>Status: <span id="statusLabel" class="status-text">In Seat</span></div>
+            
+            <!-- Live update message simulation -->
+            <div class="live-feed" id="liveFeedText">
+                📻 <strong>Live Audio Feed Connected:</strong><br>
+                <span id="sceneDescription">Main characters are entering the secret laboratory...</span>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button class="btn btn-primary" id="goBtn" onclick="goBathroom()">Go to Bathroom</button>
+        <button class="btn btn-success" id="backBtn" onclick="returnToSeat()">I'm Back! 👍</button>
+    </div>
+
+    <script>
+        // Setup initial movie timestamp variables
+        let hours = 1;
+        let minutes = 24;
+        let seconds = 15;
+        let isTimerActive = true;
+        let bathroomInterval = null;
+
+        // Simulate movie timeline moving forward
+        setInterval(() => {
+            if (isTimerActive) {
+                seconds++;
+                if (seconds >= 60) { seconds = 0; minutes++; }
+                if (minutes >= 60) { minutes = 0; hours++; }
+                updateTimerDisplay();
+            }
+        }, 1000);
+
+        function updateTimerDisplay() {
+            const hStr = String(hours).padStart(2, '0');
+            const mStr = String(minutes).padStart(2, '0');
+            const sStr = String(seconds).padStart(2, '0');
+            document.getElementById('movieTimer').textContent = `${hStr}:${mStr}:${sStr}`;
+        }
+
+        // Action: Tap "Go to Bathroom"
+        function goBathroom() {
+            document.getElementById('statusLabel').textContent = "In Bathroom";
+            document.getElementById('statusLabel').style.color = "#ff9f1c";
+            document.getElementById('goBtn').style.display = "none";
+            document.getElementById('backBtn').style.display = "block";
+            document.getElementById('liveFeedText').style.display = "block";
+            
+            // Periodically update subtitle feed text to simulate a live event feed
+            let feedCount = 0;
+            bathroomInterval = setInterval(() => {
+                feedCount++;
+                const descriptions = [
+                    "Suspense music playing. The team finds the hidden map.",
+                    "An explosion sounds in the distance! They are running.",
+                    "The countdown timer has started on the bomb panel!"
+                ];
+                document.getElementById('sceneDescription').textContent = descriptions[feedCount % descriptions.length];
+            }, 4000);
+        }
+
+        // Action: Tap "I'm Back"
+        function returnToSeat() {
+            clearInterval(bathroomInterval);
+            document.getElementById('statusLabel').textContent = "In Seat";
+            document.getElementById('statusLabel').style.color = "var(--success-color)";
+            document.getElementById('goBtn').style.display = "block";
+            document.getElementById('backBtn').style.display = "none";
+            document.getElementById('liveFeedText').style.display = "none";
+        }
+    </script>
+</body>
+</html>
