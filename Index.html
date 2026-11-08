@@ -1,219 +1,246 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bathroom Mood - Demo</title>
-    <style>
-        :root {
-            --bg-color: #0f0f15;
-            --card-bg: #1a1a24;
-            --accent-color: #e50914;
-            --text-color: #ffffff;
-            --success-color: #2ec4b6;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .demo-container {
-            width: 100%;
-            max-width: 400px;
-            background-color: var(--card-bg);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            box-sizing: border-box;
-        }
-
-        h1, h2 {
-            text-align: center;
-            margin-top: 0;
-        }
-
-        h1 { color: var(--accent-color); font-size: 24px; }
-        h2 { font-size: 18px; color: #aaa; }
-
-        .ticket-info {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .ticket-line {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .status-box {
-            text-align: center;
-            background: rgba(255,255,255,0.02);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 25px;
-        }
-
-        .timer {
-            font-size: 36px;
-            font-weight: bold;
-            margin: 10px 0;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .status-text {
-            font-weight: bold;
-            color: var(--success-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .btn-success {
-            background-color: var(--success-color);
-            color: #0f0f15;
-            display: none;
-        }
-
-        .live-feed {
-            display: none;
-            background: #000;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-size: 13px;
-            color: #ccc;
-            border: 1px solid rgba(255, 9, 20, 0.3);
-        }
-
-        .barcode-scan-sim {
-            text-align: center;
-            padding: 10px;
-            background: #fff;
-            color: #000;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>Bathroom Mood | Luxury Cinema</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:#f7f3e9;font-family:Arial,sans-serif;padding-bottom:85px}
+header{padding:24px 20px 15px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:800;letter-spacing:1px}
+.logo span,.gold{color:#d9ad62}
+.sub{color:#92908a;font-size:12px;margin-top:5px}
+.page{display:none;padding:12px 20px 25px}
+.page.active{display:block}
+h1{font-size:28px;margin:12px 0}
+h2{font-size:20px;margin:25px 0 12px}
+p{color:#aaa;line-height:1.6}
+.card{background:#171613;border:1px solid #343027;border-radius:17px;padding:18px;margin:14px 0}
+.hero{background:linear-gradient(135deg,#302516,#14120e);padding:24px;border-radius:20px;border:1px solid #70572e;margin-top:12px}
+.hero h1{font-size:30px}
+.btn{background:#d9ad62;color:#17120a;border:0;padding:14px 18px;border-radius:11px;font-weight:bold;font-size:14px;cursor:pointer}
+.btn.dark{background:#25231f;color:#eee;border:1px solid #514936}
+.btn.full{width:100%;margin-top:12px}
+.field{width:100%;padding:13px;background:#0c0c0c;border:1px solid #514936;border-radius:10px;color:white;margin:7px 0 14px;font-size:15px}
+label{color:#d9ad62;font-size:12px}
+.movie{display:flex;gap:14px;align-items:center;margin:15px 0}
+.poster{width:83px;height:112px;border-radius:10px;object-fit:cover;background:#29251e}
+.movie h3{margin:0 0 7px}
+.movie p{font-size:12px;margin:4px 0}
+.tag{display:inline-block;border:1px solid #6e5834;color:#d9ad62;padding:5px 9px;border-radius:20px;font-size:11px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#11110f;border-top:1px solid #393329;display:flex;justify-content:space-around;padding:12px 3px calc(12px + env(safe-area-inset-bottom));z-index:5}
+.nav button{background:none;border:0;color:#999;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.nav button span{font-size:20px}
+.nav button.active{color:#d9ad62}
+.timer{font-size:64px;text-align:center;font-weight:bold;color:#d9ad62;margin:25px 0}
+.center{text-align:center}
+.small{font-size:12px;color:#888}
+hr{border:0;border-top:1px solid #38332a;margin:16px 0}
+</style>
 </head>
 <body>
 
-    <div class="demo-container">
-        <h1>🍿 Bathroom Mood</h1>
-        <h2>Seat Sync Active</h2>
+<header>
+ <div>
+  <div class="logo">BATHROOM <span>MOOD.</span></div>
+  <div class="sub">YOUR CINEMA EXPERIENCE</div>
+ </div>
+ <span class="tag">PREMIUM</span>
+</header>
 
-        <!-- Barcode Simulation Link -->
-        <div class="ticket-info" id="ticketDetails">
-            <div class="ticket-line"><strong>Movie:</strong> <span>Sci-Fi Adventure 2</span></div>
-            <div class="ticket-line"><strong>Theater:</strong> <span>Screen 4</span></div>
-            <div class="ticket-line"><strong>Seat:</strong> <span>Row H - 12</span></div>
-        </div>
+<!-- HOME -->
+<section id="home" class="page active">
+ <div class="hero">
+  <span class="tag">WELCOME TO BATHROOM MOOD</span>
+  <h1>Your movie.<br>Your moment.</h1>
+  <p>Your cinema companion. Keep your seat details close and never lose track of your movie break.</p>
+  <button class="btn" onclick="showPage('movies')">Explore Movies →</button>
+ </div>
+ <h2>Quick Access</h2>
+ <div class="card" onclick="showPage('seat')">
+  <span class="gold">💺 MY SEAT</span>
+  <p>Check your cinema and seat information.</p>
+ </div>
+ <div class="card" onclick="showPage('break')">
+  <span class="gold">⏱️ BATHROOM BREAK</span>
+  <p>Start your countdown and return on time.</p>
+ </div>
+ <h2>Now showing in your app</h2>
+ <div class="card">
+  <span class="tag">MOVIE DISCOVERY</span>
+  <h3>Find your next movie</h3>
+  <p>Explore our sample movie listings.</p>
+  <button class="btn dark" onclick="showPage('movies')">View Movies</button>
+ </div>
+</section>
 
-        <!-- Live App State -->
-        <div class="status-box">
-            <div>Movie Runtime Counter</div>
-            <div class="timer" id="movieTimer">01:24:15</div>
-            <div>Status: <span id="statusLabel" class="status-text">In Seat</span></div>
-            
-            <!-- Live update message simulation -->
-            <div class="live-feed" id="liveFeedText">
-                📻 <strong>Live Audio Feed Connected:</strong><br>
-                <span id="sceneDescription">Main characters are entering the secret laboratory...</span>
-            </div>
-        </div>
+<!-- SEAT -->
+<section id="seat" class="page">
+ <span class="tag">YOUR TICKET DETAILS</span>
+ <h1>My Seat 💺</h1>
+ <p>Your cinema information, all in one place.</p>
+ <div class="card">
+  <label>CINEMA NAME</label>
+  <input id="cinema" class="field" placeholder="e.g. VOX Cinemas">
+  <label>MOVIE NAME</label>
+  <input id="seatMovie" class="field" placeholder="Enter movie name">
+  <label>HALL / SCREEN</label>
+  <input id="hall" class="field" placeholder="e.g. Screen 4">
+  <label>ROW</label>
+  <input id="row" class="field" placeholder="e.g. B">
+  <label>SEAT NUMBER</label>
+  <input id="seatNo" class="field" placeholder="e.g. 12">
+  <button class="btn full" onclick="saveSeat()">Save My Seat</button>
+ </div>
+ <div class="card">
+  <span class="gold">YOUR SAVED SEAT</span>
+  <h2 id="savedSeat">No seat saved yet</h2>
+  <p id="savedDetails">Enter your ticket details above.</p>
+ </div>
+</section>
 
-        <!-- Action Buttons -->
-        <button class="btn btn-primary" id="goBtn" onclick="goBathroom()">Go to Bathroom</button>
-        <button class="btn btn-success" id="backBtn" onclick="returnToSeat()">I'm Back! 👍</button>
-    </div>
+<!-- MOVIES -->
+<section id="movies" class="page">
+ <span class="tag">CINEMA DISCOVERY</span>
+ <h1>Movies 🎬</h1>
+ <p>Explore sample movie listings. These are demonstrations, not live UAE cinema schedules.</p>
+ <div class="card movie">
+  <img class="poster" src="https://image.tmdb.org/t/p/w342/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg" alt="Movie poster">
+  <div><h3>Movie One</h3><p>Action · Adventure</p><span class="tag">DEMO</span></div>
+ </div>
+ <div class="card movie">
+  <img class="poster" src="https://image.tmdb.org/t/p/w342/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="Movie poster">
+  <div><h3>Movie Two</h3><p>Adventure · Drama</p><span class="tag">DEMO</span></div>
+ </div>
+ <div class="card">
+  <h3>🇦🇪 UAE Cinema</h3>
+  <p>Live showtimes and cinema listings will be added when we connect a cinema data source.</p>
+ </div>
+</section>
 
-    <script>
-        // Setup initial movie timestamp variables
-        let hours = 1;
-        let minutes = 24;
-        let seconds = 15;
-        let isTimerActive = true;
-        let bathroomInterval = null;
+<!-- BREAK -->
+<section id="break" class="page">
+ <span class="tag">YOUR PERSONAL BREAK</span>
+ <h1>Bathroom Break ⏱️</h1>
+ <p>Set your break time and keep track of your countdown.</p>
+ <div class="card center">
+  <label>TIME REMAINING</label>
+  <div class="timer" id="timer">05:00</div>
+  <label>BREAK LENGTH</label>
+  <select id="duration" class="field">
+   <option value="180">3 minutes</option>
+   <option value="300" selected>5 minutes</option>
+   <option value="600">10 minutes</option>
+   <option value="900">15 minutes</option>
+  </select>
+  <button class="btn full" id="startBtn" onclick="startTimer()">Start Break</button>
+  <button class="btn dark full" onclick="pauseTimer()">Pause</button>
+  <button class="btn dark full" onclick="resetTimer()">Reset</button>
+  <hr>
+  <button class="btn full" onclick="backToMovie()">I'm Back! 🎬</button>
+  <p class="small" id="timerMessage">Enjoy your movie!</p>
+ </div>
+</section>
 
-        // Simulate movie timeline moving forward
-        setInterval(() => {
-            if (isTimerActive) {
-                seconds++;
-                if (seconds >= 60) { seconds = 0; minutes++; }
-                if (minutes >= 60) { minutes = 0; hours++; }
-                updateTimerDisplay();
-            }
-        }, 1000);
+<!-- PROFILE -->
+<section id="profile" class="page">
+ <span class="tag">YOUR ACCOUNT</span>
+ <h1>Profile ⚙️</h1>
+ <div class="card">
+  <h2>Bathroom Mood Member</h2>
+  <p>Your personal cinema companion.</p>
+ </div>
+ <div class="card">
+  <h3>App Information</h3>
+  <p>Version 2.0 · Luxury Edition</p>
+  <p>Made for cinema lovers.</p>
+ </div>
+ <div class="card">
+  <h3>Settings</h3>
+  <p>Notifications and account features can be added in a future update.</p>
+ </div>
+</section>
 
-        function updateTimerDisplay() {
-            const hStr = String(hours).padStart(2, '0');
-            const mStr = String(minutes).padStart(2, '0');
-            const sStr = String(seconds).padStart(2, '0');
-            document.getElementById('movieTimer').textContent = `${hStr}:${mStr}:${sStr}`;
-        }
+<nav class="nav">
+ <button class="active" data-page="home" onclick="showPage('home')"><span>⌂</span>Home</button>
+ <button data-page="seat" onclick="showPage('seat')"><span>💺</span>My Seat</button>
+ <button data-page="movies" onclick="showPage('movies')"><span>🎬</span>Movies</button>
+ <button data-page="break" onclick="showPage('break')"><span>⏱️</span>Break</button>
+ <button data-page="profile" onclick="showPage('profile')"><span>♙</span>Profile</button>
+</nav>
 
-        // Action: Tap "Go to Bathroom"
-        function goBathroom() {
-            document.getElementById('statusLabel').textContent = "In Bathroom";
-            document.getElementById('statusLabel').style.color = "#ff9f1c";
-            document.getElementById('goBtn').style.display = "none";
-            document.getElementById('backBtn').style.display = "block";
-            document.getElementById('liveFeedText').style.display = "block";
-            
-            // Periodically update subtitle feed text to simulate a live event feed
-            let feedCount = 0;
-            bathroomInterval = setInterval(() => {
-                feedCount++;
-                const descriptions = [
-                    "Suspense music playing. The team finds the hidden map.",
-                    "An explosion sounds in the distance! They are running.",
-                    "The countdown timer has started on the bomb panel!"
-                ];
-                document.getElementById('sceneDescription').textContent = descriptions[feedCount % descriptions.length];
-            }, 4000);
-        }
+<script>
+function showPage(name){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(name).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+ window.scrollTo(0,0);
+}
 
-        // Action: Tap "I'm Back"
-        function returnToSeat() {
-            clearInterval(bathroomInterval);
-            document.getElementById('statusLabel').textContent = "In Seat";
-            document.getElementById('statusLabel').style.color = "var(--success-color)";
-            document.getElementById('goBtn').style.display = "block";
-            document.getElementById('backBtn').style.display = "none";
-            document.getElementById('liveFeedText').style.display = "none";
-        }
-    </script>
+function saveSeat(){
+ const cinema=document.getElementById('cinema').value.trim();
+ const movie=document.getElementById('seatMovie').value.trim();
+ const hall=document.getElementById('hall').value.trim();
+ const row=document.getElementById('row').value.trim();
+ const seat=document.getElementById('seatNo').value.trim();
+ if(!cinema||!movie||!hall||!row||!seat){alert('Please fill in all seat details.');return;}
+ document.getElementById('savedSeat').textContent='Seat '+row+seat;
+ document.getElementById('savedDetails').textContent=cinema+' · '+movie+' · '+hall;
+ try{localStorage.setItem('bathroomMoodSeat',JSON.stringify({cinema,movie,hall,row,seat}));}catch(e){}
+ alert('Your seat information has been saved!');
+}
+
+try{
+ const saved=JSON.parse(localStorage.getItem('bathroomMoodSeat'));
+ if(saved){
+  ['cinema','seatMovie','hall','row','seatNo'].forEach((id,i)=>document.getElementById(id).value=Object.values(saved)[i]);
+  document.getElementById('savedSeat').textContent='Seat '+saved.row+saved.seat;
+  document.getElementById('savedDetails').textContent=saved.cinema+' · '+saved.movie+' · '+saved.hall;
+ }
+}catch(e){}
+
+let remaining=300;
+let interval=null;
+function displayTimer(){
+ const mins=Math.floor(remaining/60);
+ const secs=remaining%60;
+ document.getElementById('timer').textContent=String(mins).padStart(2,'0')+':'+String(secs).padStart(2,'0');
+}
+function startTimer(){
+ if(interval)return;
+ if(remaining<=0)remaining=Number(document.getElementById('duration').value);
+ document.getElementById('timerMessage').textContent='Your break is running.';
+ interval=setInterval(()=>{
+  if(remaining>0){remaining--;displayTimer();}
+  else{
+   clearInterval(interval);interval=null;
+   document.getElementById('timerMessage').textContent='Time is up! Please return to your movie.';
+   alert('Your break time is over!');
+  }
+ },1000);
+}
+function pauseTimer(){
+ clearInterval(interval);interval=null;
+ document.getElementById('timerMessage').textContent='Timer paused.';
+}
+function resetTimer(){
+ clearInterval(interval);interval=null;
+ remaining=Number(document.getElementById('duration').value);
+ displayTimer();
+ document.getElementById('timerMessage').textContent='Timer reset.';
+}
+document.getElementById('duration').addEventListener('change',resetTimer);
+function backToMovie(){
+ pauseTimer();
+ remaining=Number(document.getElementById('duration').value);
+ displayTimer();
+ document.getElementById('timerMessage').textContent='Welcome back! Enjoy your movie.';
+ showPage('home');
+}
+displayTimer();
+</script>
 </body>
 </html>
